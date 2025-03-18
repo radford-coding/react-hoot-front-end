@@ -34,6 +34,13 @@ const App = () => {
     navigate('/hoots');
   };
 
+  const handleUpdateHoot = async (hootId, hootFormData) => {
+    // console.log('hootId:', hootId, 'hootFormData:', hootFormData);
+    const updatedHoot = await hootService.update(hootId, hootFormData);
+    setHoots(hoots.map(hoot => hootId === hoot._id ? updatedHoot : hoot));
+    navigate(`/hoots/${hootId}`);
+  };
+
   useEffect(() => {
     const fetchAllHoots = async () => {
       const hootsData = await hootService.index();
@@ -50,8 +57,9 @@ const App = () => {
         {user
           ? (<>
             <Route path='/hoots' element={<HootList hoots={hoots} />}></Route>
-            <Route path='/hoots/new' element={<HootForm handleAddHoot={handleAddHoot}/>}></Route>
+            <Route path='/hoots/new' element={<HootForm handleAddHoot={handleAddHoot} />}></Route>
             <Route path='/hoots/:hootId' element={<HootDetails handleDeleteHoot={handleDeleteHoot} />}></Route>
+            <Route path='/hoots/:hootId/edit' element={<HootForm handleUpdateHoot={handleUpdateHoot} />}></Route>
           </>)
           : (<>
             <Route path='/sign-up' element={<SignUpForm />} />
