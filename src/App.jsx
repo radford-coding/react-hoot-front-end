@@ -27,6 +27,13 @@ const App = () => {
     navigate('/hoots');
   };
 
+  const handleDeleteHoot = async (hootId) => {
+    // console.log('hootId', hootId);
+    const deletedHoot = await hootService.deleteHoot(hootId);
+    setHoots(hoots.filter(hoot => hoot._id !== deletedHoot._id));
+    navigate('/hoots');
+  };
+
   useEffect(() => {
     const fetchAllHoots = async () => {
       const hootsData = await hootService.index();
@@ -44,7 +51,7 @@ const App = () => {
           ? (<>
             <Route path='/hoots' element={<HootList hoots={hoots} />}></Route>
             <Route path='/hoots/new' element={<HootForm handleAddHoot={handleAddHoot}/>}></Route>
-            <Route path='/hoots/:hootId' element={<HootDetails />}></Route>
+            <Route path='/hoots/:hootId' element={<HootDetails handleDeleteHoot={handleDeleteHoot} />}></Route>
           </>)
           : (<>
             <Route path='/sign-up' element={<SignUpForm />} />
