@@ -8,6 +8,7 @@ import Landing from './components/Landing/Landing';
 import Dashboard from './components/Dashboard/Dashboard';
 
 import HootList from './components/HootList/HootList';
+import HootDetails from './components/HootDetails/HootDetails';
 import * as hootService from './services/hootService';
 
 import { UserContext } from './contexts/UserContext';
@@ -33,6 +34,7 @@ const App = () => {
         {user
           ? (<>
             <Route path='/hoots' element={<HootList hoots={hoots} />}></Route>
+            <Route path='/hoots/:hootId' element={<HootDetails />}></Route>
           </>)
           : (<>
             <Route path='/sign-up' element={<SignUpForm />} />
